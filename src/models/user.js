@@ -2,10 +2,9 @@
 const {
   Model
 } = require('sequelize');
-
-const {SALT} = require('../config/serverConfig');  
 const bcrypt = require('bcrypt');
 
+const { SALT } = require('../config/serverConfig');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -15,23 +14,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsToMany(models.Role, {
+        through: 'User_Roles',
+      })
     }
   }
   User.init({
     email: {
-      type : DataTypes.STRING,
-      allowNull:false,
-      unique:true,
-      validate:{
-        isEmail:true,
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true
       }
     },
-    password: 
-    {
-      type : DataTypes.STRING,
-      allowNull:false,
-      validate:{
-        len:[3,100],
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [3, 100]
       }
     }
   }, {
@@ -39,11 +40,9 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
   });
 
-  // user object is passed to the callback function, it is the object that is to be created
   User.beforeCreate((user) => {
     const encryptedPassword = bcrypt.hashSync(user.password, SALT);
     user.password = encryptedPassword;
-  })
-
+  });
   return User;
 };
