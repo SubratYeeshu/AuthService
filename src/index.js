@@ -14,18 +14,18 @@ const prepareAndStartServer = () => {
 
         app.use('/api', apiRoutes); 
 
-        const service = new userService();
-        const newToken = service.createToken({
-            email: 'subrat@admin.com',
-            id: 1
-        })
+        // const service = new userService();
+        // const newToken = service.createToken({
+        //     email: 'subrat@admin.com',
+        //     id: 1
+        // })
 
-        console.log("New token is", newToken);
+        // console.log("New token is", newToken);
 
-        const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1YnJhdEBhZG1pbi5jb20iLCJpZCI6MSwiaWF0IjoxNjk1MjE3MjI5LCJleHAiOjE2OTUyMjA4Mjl9.ZmjGeGIJ5X5sH1jvA8SnRPsse_0qlZE-eQdd8xB-UIM`;
+        // const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1YnJhdEBhZG1pbi5jb20iLCJpZCI6MSwiaWF0IjoxNjk1MjE3MjI5LCJleHAiOjE2OTUyMjA4Mjl9.ZmjGeGIJ5X5sH1jvA8SnRPsse_0qlZE-eQdd8xB-UIM`;
 
-        const res = service.verifyToken(token);
-        console.log(res);
+        // const res = service.verifyToken(token);
+        // console.log(res);
 
         console.log(`Server Started on ${PORT}`);
     })
