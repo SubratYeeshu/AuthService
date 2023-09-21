@@ -16,7 +16,7 @@ const prepareAndStartServer = () => {
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: true }));
 
-        // app.use('/api', apiRoutes); 
+        app.use('/api', apiRoutes); 
 
         // const u1 = await User.findByPk(3);
         // const r1 = await Role.findByPk(2);
