@@ -1,21 +1,26 @@
-const {User, Role} = require('../models/index');
+const { User, Role } = require('../models/index');
+const ValidationError = require('../utils/validation-error');
 
-class UserRepository{
-    async create(data){
+class UserRepository {
+
+    async create(data) {
         try {
             const user = await User.create(data);
             return user;
         } catch (error) {
+            if (error.name == 'SequelizeValidationError') {
+                throw new ValidationError(error);
+            }
             console.log("Something went wrong on repository layer");
             throw error;
         }
     }
 
-    async destroy(userId){
+    async destroy(userId) {
         try {
             await User.destroy({
-                where:{
-                    id:userId
+                where: {
+                    id: userId
                 }
             });
             return true;
@@ -25,12 +30,11 @@ class UserRepository{
         }
     }
 
-    async getById(userId){
+    async getById(userId) {
         try {
-            const user = await User.findByPk(userId,
-                {
-                    attributes: ['email', 'id']
-                });
+            const user = await User.findByPk(userId, {
+                attributes: ['email', 'id']
+            });
             return user;
         } catch (error) {
             console.log("Something went wrong on repository layer");
@@ -38,14 +42,15 @@ class UserRepository{
         }
     }
 
-    async getByEmail(userEmail){
+    async getByEmail(userEmail) {
         try {
+            console.log('inside getbyemail');
             const user = await User.findOne({
-                where:{
+                where: {
                     email: userEmail
                 }
-            });
-
+            })
+            console.log('outside getbyemail');
             return user;
         } catch (error) {
             console.log("Something went wrong on repository layer");
@@ -53,16 +58,14 @@ class UserRepository{
         }
     }
 
-    // Tell user admin or not
-    async isAdmin(userId){
+    async isAdmin(userId) {
         try {
             const user = await User.findByPk(userId);
             const adminRole = await Role.findOne({
-                where:{
-                    name: 'admin'
+                where: {
+                    name: 'ADMIN'
                 }
             });
-
             return user.hasRole(adminRole);
         } catch (error) {
             console.log("Something went wrong on repository layer");

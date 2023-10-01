@@ -1,9 +1,9 @@
-// set up base routes /api/v1
-
 const express = require('express');
-const router = express.Router();
 
 const v1ApiRoutes = require('./v1/index');
+
+const router = express.Router();
+
 
 router.use('/v1', v1ApiRoutes);
 

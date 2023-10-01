@@ -27,5 +27,4 @@ router.get(
     UserController.isAdmin
 );
 
-
 module.exports = router;
